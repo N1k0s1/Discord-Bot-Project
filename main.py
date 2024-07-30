@@ -35,5 +35,15 @@ async def sync(ctx):
     await bot.sync_commands()
     await ctx.respond(f"Succesfully synced commands")
 
+@bot.slash_command(name="createchannel", description="Create a new channel with specified users having access", guild_ids=[1255437522629169285])
+async def createchannel(ctx, channelname: str, users: discord.Member):
+    guild = ctx.guild
+    overwrites = {
+        guild.default_role: discord.PermissionOverwrite(read_messages=False),
+        guild.me: discord.PermissionOverwrite(read_messages=True)
+    }
+    overwrites[users] = discord.PermissionOverwrite(read_messages=True)
+    await guild.create_text_channel(channelname, overwrites=overwrites)
+    await ctx.respond("You have created a new channel!")
 
-bot.run('tokenhere')
+bot.run()
