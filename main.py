@@ -6,6 +6,7 @@ from discord.ext import commands
 @bot.event
 async def on_ready():
     bot.load_extension("cogs.UserManagement")
+    bot.load_extension("cogs.SuggestionCollection")
     print(f"We have logged in as {bot.user}")
 
 
@@ -59,5 +60,13 @@ async def deletechannel(ctx, channel: discord.TextChannel):
         await ctx.respond("Channel deleted successfully!")
     else:
         await ctx.respond("You do not have permission to delete this channel.")
+"""@bot.slash_command(name="suggestion", description="Submit a suggestion to the server")
+async def submit_suggestion(ctx, *, suggestion):
+    suggestion_channel = bot.get_channel(1267667592060076084)
+    if suggestion_channel:
+        await suggestion_channel.send(f"New suggestion from: {suggestion}")
+        await ctx.respond("Thank you for your suggestion!", ephemeral=True)
+    else:
+        await ctx.respond("Suggestion channel not found.")"""
 
 bot.run('')
