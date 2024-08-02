@@ -10,7 +10,7 @@ class ChannelManagement(commands.Cog):
         guild = ctx.guild
         overwrites = {
             guild.default_role: discord.PermissionOverwrite(read_messages=False),
-            guild.me: discord.PermissionOverwrite(read_messages=True)
+            guild.me: discord.PermissionOverwrite(read_messages=True)   
         }
         overwrites[users] = discord.PermissionOverwrite(read_messages=True)
         await guild.create_text_channel(channelname, overwrites=overwrites)

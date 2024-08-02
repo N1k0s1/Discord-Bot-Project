@@ -26,14 +26,10 @@ class UserManagement(commands.Cog):
             ]
 
             locations = [
-                discord.SelectOption(label="Location 1", value="Location 1"),
-                discord.SelectOption(label="Location 2", value="Location 2"),
-                discord.SelectOption(label="Location 3", value="Location 3"),
-                discord.SelectOption(label="Location 4", value="Location 4"),
-                discord.SelectOption(label="Location 5", value="Location 5"),
-                discord.SelectOption(label="Location 6", value="Location 6"),
-                discord.SelectOption(label="Location 7", value="Location 7"),
-                discord.SelectOption(label="Location 8", value="Location 8")
+                discord.SelectOption(label="Auckland", value="Auckland"),
+                discord.SelectOption(label="Wellington", value="Wellington "),
+                discord.SelectOption(label="Christchurch", value="Christchurch"),
+                discord.SelectOption(label="Hamilton", value="Hamilton"),
             ]
             select_cohort = discord.ui.Select(placeholder="Choose your cohort", options=options, custom_id="select_cohort")
             select_location = discord.ui.Select(placeholder="Choose your location", options=locations, custom_id="select_location")
@@ -42,7 +38,7 @@ class UserManagement(commands.Cog):
             view.add_item(select_cohort)
             view.add_item(select_location)
 
-            message = await ctx.send(content="Please select your cohort and location:", view=view)
+            message = await ctx.respond(content="Please select your cohort and location:", view=view)
 
             def interaction_check(interaction):
                 return interaction.user == member and interaction.message.id == message.id

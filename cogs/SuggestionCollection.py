@@ -1,11 +1,12 @@
 import discord
 from discord.ext import commands
+id = [1255437522629169285]
 
 class SuggestionBox(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
 
-@commands.slash_command(name="suggestion", description="Submit a suggestion to the server")
+@commands.slash_command(name="suggestion", description="Submit a suggestion to the server", guild_id=id)
 async def submit_suggestion(self, ctx, *, suggestion):
     suggestion_channel = self.bot.get_channel(1267667592060076084)
     if suggestion_channel:
