@@ -8,12 +8,13 @@ class SuggestionBox(commands.Cog):
 
 @commands.slash_command(name="suggestion", description="Submit a suggestion to the server", guild_id=id)
 async def submit_suggestion(self, ctx, *, suggestion):
-    suggestion_channel = self.bot.get_channel(1267667592060076084)
-    if suggestion_channel:
-        await suggestion_channel.send(f"New suggestion from: {suggestion}")
-        await ctx.respond("Thank you for your suggestion!", ephemeral=True)
-    else:
-        await ctx.respond("Suggestion channel not found.")
+  suggestion_channel = self.bot.get_channel(1267667592060076084)
+  if suggestion_channel:
+    username = ctx.author.name
+    await suggestion_channel.send(f"New suggestion from {username}: {suggestion}")
+    await ctx.respond("Thank you for your suggestion!", ephemeral=True)
+  else:
+    await ctx.respond("Suggestion channel not found.")
 
 def setup(bot):
   bot.add_cog(SuggestionBox(bot))
