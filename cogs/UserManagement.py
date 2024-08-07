@@ -46,8 +46,11 @@ class UserManagement(commands.Cog):
             interaction = await self.bot.wait_for("interaction", check=interaction_check, timeout=120)
 
             cohort = interaction.data['values'][0]
-            location = interaction.data['values'][1]
-
+            if len(interaction.data['values']) > 1:
+                location = interaction.data['values'][1]
+            else:
+                location = None 
+                print("Error: 'values' list does not have enough elements.")
             cohort_role = discord.utils.get(member.guild.roles, name=cohort)
             location_role = discord.utils.get(member.guild.roles, name=location)
 
