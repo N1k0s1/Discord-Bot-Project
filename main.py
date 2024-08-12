@@ -15,6 +15,11 @@ async def on_ready():
 
 
 
+@bot.slash_command(name="roletest", description="Set your cohort and location roles", guild_ids=id)
+async def rolesetup(self, ctx, member: discord.Member):
+    member.add_roles("Cohort 1")
+    await ctx.respond("Role found")
+
 @bot.slash_command(name="loadcog", description= "Loads a cog of the users choosing", guild_id = id)
 async def cogs(ctx, cogs):
     if cogs in cogs:
@@ -44,4 +49,4 @@ async def sync(ctx):
 
 
 
-bot.run()
+bot.run(
