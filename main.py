@@ -16,9 +16,14 @@ async def on_ready():
 
 
 @bot.slash_command(name="roletest", description="Set your cohort and location roles", guild_ids=id)
-async def rolesetup(self, ctx, member: discord.Member):
-    member.add_roles("Cohort 1")
-    await ctx.respond("Role found")
+async def roletest(ctx, member: discord.Member):
+    role_id = 1258531898427314237
+    role = discord.utils.get(ctx.guild.roles, id=role_id)
+    if role is not None:
+        await member.add_roles(role)
+        await ctx.respond("Role found")
+    else:
+        await ctx.respond("Role not found")
 
 @bot.slash_command(name="loadcog", description= "Loads a cog of the users choosing", guild_id = id)
 async def cogs(ctx, cogs):
@@ -49,4 +54,3 @@ async def sync(ctx):
 
 
 
-bot.run(
