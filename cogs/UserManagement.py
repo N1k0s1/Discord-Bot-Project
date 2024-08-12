@@ -12,18 +12,28 @@ class UserManagement(commands.Cog):
         locations = ["Location X", "Location Y", "Location Z"]
 
         cohort_dropdown = discord.ui.Select(
-            placeholder="Select a cohort",
-            options=[discord.SelectOption(label=cohort) for cohort in cohorts]
-        )
-        location_dropdown = discord.ui.Select(
-            placeholder="Select a location",
-            options=[discord.SelectOption(label=location) for location in locations]
+            placeholder="Select your cohort...",
+            options=[
+                discord.SelectOption(label="Cohort 1", value="1258531898427314237"),
+                discord.SelectOption(label="Cohort 2", value="Cohort 2"),
+            ],
+            custom_id="cohort_dropdown"
         )
 
-        message = await ctx.respond(
-            f"Please select your cohort and location, {member.mention}",
-            components=[cohort_dropdown, location_dropdown]
+        location_dropdown = discord.ui.Select(
+            placeholder="Select your location...",
+            options=[
+                discord.SelectOption(label="Location 1", value="location_1"),
+                discord.SelectOption(label="Location 2", value="location_2"),
+            ],
+            custom_id="location_dropdown"
         )
+
+        view = discord.ui.View()
+        view.add_item(cohort_dropdown)
+        view.add_item(location_dropdown)
+
+        message = await ctx.respond("Please select your cohort and location:", view=view)
 
         try:
             interaction = await self.bot.wait_for(
@@ -45,7 +55,6 @@ class UserManagement(commands.Cog):
         if location_role:
             await member.add_roles(location_role)
 
-        await message.edit(content=f"Roles assigned successfully to {member.mention}.")
-
+        await interaction.respond(content=f"Roles assigned successfully to {member.mention}.")
 def setup(bot):
     bot.add_cog(UserManagement(bot))
