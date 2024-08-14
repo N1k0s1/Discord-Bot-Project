@@ -14,7 +14,7 @@ class UserManagement(commands.Cog):
         cohort_dropdown = discord.ui.Select(
             placeholder="Select your cohort...",
             options=[
-                discord.SelectOption(label="Cohort 1", value="1258531898427314237"),
+                discord.SelectOption(label="Cohort 1", value="Cohort 1"),
                 discord.SelectOption(label="Cohort 2", value="Cohort 2"),
             ],
             custom_id="cohort_dropdown"
@@ -48,12 +48,21 @@ class UserManagement(commands.Cog):
         cohort = interaction.component[0].label
         location = interaction.component[1].label
 
-        cohort_role = discord.utils.get(ctx.guild.roles, name=cohort)
-        location_role = discord.utils.get(ctx.guild.roles, name=location)
-        if cohort_role:
-            await member.add_roles(cohort_role)
-        if location_role:
-            await member.add_roles(location_role)
+        role_id = None
+        if cohort == "Cohort 1":
+            role_id = 1258531898427314237
+        elif cohort == "Cohort 2":
+            role_id = 1258531898427314238
+        else:
+            await ctx.respond("Invalid cohort")
+            return
+
+        role = discord.utils.get(ctx.guild.roles, id=role_id)
+        if role is not None:
+            await member.add_roles(role)
+            await ctx.respond("Role found")
+        else:
+            await ctx.respond("Role not found")
 
         await interaction.respond(content=f"Roles assigned successfully to {member.mention}.")
 def setup(bot):
