@@ -6,18 +6,26 @@ from discord.ext import commands
 @bot.event
 async def on_ready():
     print(f"We have logged in as {bot.user}")
-    bot.load_extension("cogs.UserManagement")
-    bot.load_extension("cogs.SuggestionCollection")
-    bot.load_extension("cogs.ChannelManagement")
-    print(f"Loaded {bot.load_extension} cogs")
+    extensions = ["cogs.UserManagement", "cogs.ChannelManagement", "cogs.SuggestionCollection", "cogs.SupportTicket"]
+    for extension in extensions:
+        bot.load_extension(extension)
+    print(f"Loaded {len(extensions)} cogs")
     await bot.sync_commands()
     print(f"Succesfully synced commands")
 
 
 
 @bot.slash_command(name="roletest", description="Set your cohort and location roles", guild_ids=id)
-async def roletest(ctx, member: discord.Member):
-    role_id = 1258531898427314237
+async def roletest(ctx, member: discord.Member, cohort: str):
+    role_id = None
+    if cohort == "cohort 1":
+        role_id = 1258531898427314237
+    elif cohort == "cohort 2":
+        role_id = 1258531898427314238
+    else:
+        await ctx.respond("Invalid cohort")
+        return
+
     role = discord.utils.get(ctx.guild.roles, id=role_id)
     if role is not None:
         await member.add_roles(role)
@@ -51,6 +59,4 @@ async def ping(ctx):
 async def sync(ctx): 
     await bot.sync_commands()
     await ctx.respond(f"Succesfully synced commands")
-
-
 
