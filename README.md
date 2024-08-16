@@ -1,3 +1,7 @@
+Discord Server: https://discord.gg/pbNCukHC	
+Features currently not working:	
+Most of them, a few working, most require further debugging and lots of rewriting.	
+
 1. User Validation and Credential Assignment
 
 
