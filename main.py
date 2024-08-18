@@ -13,26 +13,6 @@ async def on_ready():
     await bot.sync_commands()
     print(f"Succesfully synced commands")
 
-
-
-@bot.slash_command(name="roletest", description="Set your cohort and location roles", guild_ids=id)
-async def roletest(ctx, member: discord.Member, cohort: str):
-    role_id = None
-    if cohort == "cohort 1":
-        role_id = 1258531898427314237
-    elif cohort == "cohort 2":
-        role_id = 1258531898427314238
-    else:
-        await ctx.respond("Invalid cohort")
-        return
-
-    role = discord.utils.get(ctx.guild.roles, id=role_id)
-    if role is not None:
-        await member.add_roles(role)
-        await ctx.respond("Role found")
-    else:
-        await ctx.respond("Role not found")
-
 @bot.slash_command(name="loadcog", description= "Loads a cog of the users choosing", guild_id = id)
 async def cogs(ctx, cogs):
     if cogs in cogs:
