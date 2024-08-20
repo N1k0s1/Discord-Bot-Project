@@ -1,29 +1,34 @@
 import discord
 from discord.ext import commands
-from discord.ui import Select
 import asyncio
-
-id = [1255437522629169285]
 
 class UserManagement(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
     @commands.slash_command(name="rolesetup", description="Set your cohort and location roles", guild_ids=id)
-    async def roletest(self, ctx, member: discord.Member):
-        options = [
-            discord.SelectOption(label="Cohort 1", value="cohort_1"),
-            discord.SelectOption(label="Cohort 2", value="cohort_2")
-        ]
-        select = Select(options=options, placeholder="Select your cohort", min_values=1, max_values=1)
+    async def role_setup(self, ctx, member: discord.Member):
+        cohort_dropdown = discord.ui.Select(
+            placeholder="Select your cohort...",
+            options=[
+                discord.SelectOption(label="Cohort 1", value="cohort_1"),
+                discord.SelectOption(label="Cohort 2", value="cohort_2"),
+            ],
+            custom_id="cohort_dropdown"
+        )
 
-        await ctx.send("Please select your cohort:", view=select)
+        view = discord.ui.View()
+        view.add_item(cohort_dropdown)
+
+        message = await ctx.send("Please select your cohort:", view=view)
 
         def check(interaction):
-            return interaction.user == ctx.author and interaction.message == ctx.message
+            return interaction.user == ctx.author and interaction.message == message
 
         try:
             interaction = await self.bot.wait_for("select_option", check=check, timeout=60)
+            await interaction.response.defer()  # Acknowledge the interaction
+
             cohort = interaction.values[0]
 
             role_id = None
@@ -39,9 +44,9 @@ class UserManagement(commands.Cog):
             role = discord.utils.get(guild.roles, id=role_id)
             if role is not None:
                 await member.add_roles(role)
-                await ctx.respond("Role found")
+                await ctx.respond("Role assigned successfully.")
             else:
-                await ctx.respond("Role not found")
+                await ctx.respond("Role not found.")
 
         except asyncio.TimeoutError:
             await ctx.respond("Selection timed out.")
