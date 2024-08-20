@@ -7,7 +7,7 @@ class ChannelManagement(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-@commands.slash_command(name="createchannel", description="Create a new channel with specified users having access", guild_id=id)
+@commands.slash_command(name="createchannel", description="Create a new channel with specified users having access")
 async def createchannel(ctx, channelname: str, users: str):
     guild = ctx.guild
     overwrites = {
@@ -22,7 +22,16 @@ async def createchannel(ctx, channelname: str, users: str):
     await guild.create_text_channel(channelname, overwrites=overwrites)
     await ctx.respond("You have created a new channel!")
 
-@commands.slash_command(name="deletechannel", description="Delete a channel", guild_id=id)
+@commands.slash_command(name="invite", description="Invite a user to the channel")
+async def invite(ctx, user: discord.Member):
+    channel = ctx.channel
+    if ctx.author == channel.guild.owner or ctx.author.guild_permissions.administrator:
+        await channel.set_permissions(user, read_messages=True)
+        await ctx.respond(f"{user.mention} has been invited to the channel!")
+    else:
+        await ctx.respond("You do not have permission to invite users to this channel.")
+
+@commands.slash_command(name="deletechannel", description="Delete a channel")
 async def deletechannel(ctx, channel: discord.TextChannel):
     if ctx.author == channel.guild.owner or ctx.author.guild_permissions.administrator:
         await channel.delete()
