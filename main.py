@@ -43,49 +43,6 @@ async def sync(ctx):
 
 
 
-async def role_setup(ctx, member: discord.Member):
-    cohort_dropdown = discord.ui.Select(
-        placeholder="Select your cohort...",
-        options=[
-            discord.SelectOption(label="Cohort 1", value="cohort_1"),
-            discord.SelectOption(label="Cohort 2", value="cohort_2"),
-        ],
-        custom_id="cohort_dropdown"
-    )
-
-    view = discord.ui.View()
-    view.add_item(cohort_dropdown)
-
-    message = await ctx.respond("Please select your cohort:", view=view)
-
-    def check(interaction):
-        return interaction.user == ctx.author and interaction.message == message
-
-    try:
-        interaction = await bot.wait_for("select_option", check=check, timeout=60)
-        await interaction.response.defer()  # Acknowledge the interaction
-
-        cohort = interaction.values[0]
-
-        role_id = None
-        if cohort == "cohort_1":
-            role_id = 1258531898427314237
-        elif cohort == "cohort_2":
-            role_id = 1258531898427314238
-        else:
-            await ctx.respond("Invalid cohort")
-            return
-
-        guild = ctx.guild
-        role = discord.utils.get(guild.roles, id=role_id)
-        if role is not None:
-            await member.add_roles(role)
-            await ctx.respond("Role assigned successfully.")
-        else:
-            await ctx.respond("Role not found.")
-
-    except asyncio.TimeoutError:
-        await ctx.respond("Selection timed out.")
 
 class Cohorts(discord.ui.View):
     def __init__(self):
@@ -96,8 +53,15 @@ class Cohorts(discord.ui.View):
         role_id = 1258531898427314237
         role = discord.utils.get(interaction.guild.roles, id=role_id)
         if role is not None:
+            member = interaction.user
             await member.add_roles(role)
         else:
             embed = discord.Embed(title="Cohort 1", description="Cohort 1")
             await interaction.response.send_message(embed=embed)
+
+
+@bot.slash_command(name="cohortselection", description="Cohort Selection", guild_id = id)
+async def sellers(ctx,):
+        await ctx.respond('Sellers: Choose an option.', view=Cohorts())
+
 
