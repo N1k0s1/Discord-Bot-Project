@@ -59,9 +59,29 @@ class Cohorts(discord.ui.View):
             embed = discord.Embed(title="Cohort 1", description="Cohort 1")
             await interaction.response.send_message(embed=embed)
 
+    @discord.ui.button(label='Cohort 2', custom_id='cohort_2', style=discord.ButtonStyle.green)
+    async def on_button2(self, button: discord.ui.Button, interaction: discord.Interaction):
+        role_id = 1258532294969397350
+        role = discord.utils.get(interaction.guild.roles, id=role_id)
+        if role is not None:
+            member = interaction.user
+            await member.add_roles(role)
+        else:
+            embed = discord.Embed(title="Cohort 2", description="Cohort 2")
+            await interaction.response.send_message(embed=embed)
+
+    @discord.ui.button(label='Cohort 3', custom_id='cohort_3', style=discord.ButtonStyle.green)
+    async def on_button3(self, button: discord.ui.Button, interaction: discord.Interaction):
+        role_id = 1258531898427314237
+        role = discord.utils.get(interaction.guild.roles, id=role_id)
+        if role is not None:
+            member = interaction.user
+            await member.add_roles(role)
+        else:
+            embed = discord.Embed(title="Cohort 3", description="Cohort 3")
+            await interaction.response.send_message(embed=embed)
 
 @bot.slash_command(name="cohortselection", description="Cohort Selection", guild_id = id)
 async def sellers(ctx,):
         await ctx.respond('Sellers: Choose an option.', view=Cohorts())
-
 
