@@ -6,7 +6,7 @@ class UserManagement(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.slash_command(name="rolesetup", description="Set your cohort and location roles", guild_ids=id)
+    @commands.commands()
     async def role_setup(self, ctx, member: discord.Member):
         cohort_dropdown = discord.ui.Select(
             placeholder="Select your cohort...",
@@ -52,4 +52,4 @@ class UserManagement(commands.Cog):
             await ctx.respond("Selection timed out.")
 
 def setup(bot):
-    bot.add_cog(UserManagement(bot))
+  bot.add_cog(UserManagement(bot))

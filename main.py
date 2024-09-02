@@ -3,6 +3,11 @@ import discord
 bot = discord.Bot()
 from discord.ext import commands
 import asyncio
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+TOKEN = os.getenv('DISCORD_BOT_TOKEN')
 
 @bot.event
 async def on_ready():
@@ -83,5 +88,7 @@ class Cohorts(discord.ui.View):
 
 @bot.slash_command(name="cohortselection", description="Cohort Selection", guild_id = id)
 async def sellers(ctx,):
-        await ctx.respond('Sellers: Choose an option.', view=Cohorts())
+        await ctx.respond('Cohorts: Choose an option.', view=Cohorts())
 
+
+bot.run(TOKEN)
