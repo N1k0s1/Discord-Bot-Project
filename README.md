@@ -2,6 +2,49 @@ Discord Server: https://discord.gg/pbNCukHC
 Features currently not working:	
 Most of them, a few working, most require further debugging and lots of rewriting.	
 
+
+### This bot is proof of concept, requirements/specification sheet listed below self-host instructions.
+
+## Self Host Instructions
+
+#### Prerequisites
+1. **Python**: Ensure you have Python 3.8 or higher installed. You can download it from [python.org](https://www.python.org/downloads/).
+2. **Discord Bot Token**: You need a bot token from the Discord Developer Portal. Create a new application and bot if you haven't already.
+
+1. **Clone or Download the Repository**:
+   - Clone your repository or download the code to your local machine.
+
+2. **Install Required Libraries**:
+   - Open a terminal or command prompt.
+   - Navigate to the directory where your `main.py`file is located.
+   - Install the required libraries using `pip`:
+     ```sh
+     pip install -r requirements.txt
+     ```
+
+3. **Set Up Your Bot Token**:
+   - Add your bot token to the `.env` file:
+     ```
+     DISCORD_BOT_TOKEN=YOUR_BOT_TOKEN_HERE
+     ```
+
+4. **Run The Bot**:
+   - In the terminal or command prompt, run the bot:
+     ```sh
+     python main.py
+     ```
+
+5. **Invite Your Bot to Your Server**:
+   - Go to the Discord Developer Portal.
+   - Navigate to your application and click on the "OAuth2" tab.
+   - Under "OAuth2 URL Generator", select the `bot`scope and the necessary permissions for the bot.
+   - Copy the generated URL and open it in your browser to invite the bot to your server.
+
+6. **Verify The Bot is Running**:
+   - Check the terminal for the message "We have logged in as [The Bot's Name]".
+   - In your Discord server, use the `/ping` command to verify that the bot is responding.
+
+
 1. User Validation and Credential Assignment
 
 
@@ -11,6 +54,8 @@ Most of them, a few working, most require further debugging and lots of rewritin
 
 	•	Assign roles based on the provided credentials.
 
+	![image](https://github.com/user-attachments/assets/c6fe9885-716b-4cf8-a51e-cc937b69ce64)
+	#### Cohort Management working. Cohort role assignment working, will work on City/Program/Cohort 
 
 
 2. Cohort Management
